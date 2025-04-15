@@ -1,0 +1,12 @@
+/* 
+ * datepicker.css
+ * Custom styles for react-datepicker
+ */
+
+.react-datepicker-wrapper {
+  width: 100%;
+}
+
+.react-datepicker__input-container input {
+  width: 100%;
+}

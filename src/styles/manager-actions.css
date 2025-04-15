@@ -1,0 +1,52 @@
+/* 
+ * manager-actions.css
+ * Styles for manager actions and decision UI
+ */
+
+.action-container {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.radio-group {
+  display: flex;
+  gap: 1rem;
+}
+
+.radio-label {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  cursor: pointer;
+}
+
+.radio-text {
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+
+.comments-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.manager-comments {
+  min-height: 80px;
+  resize: vertical;
+}
+
+.submit-button {
+  align-self: flex-end;
+}
+
+.decision-info {
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+}
+
+.pending-text {
+  font-style: italic;
+  color: var(--text-secondary);
+}

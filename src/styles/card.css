@@ -1,0 +1,72 @@
+/* 
+ * card.css
+ * Card and section header styles
+ */
+
+.card {
+  background-color: var(--card-bg);
+  border-radius: 1rem;
+  box-shadow: var(--shadow);
+  margin-bottom: 2rem;
+  overflow: hidden;
+  border: 1px solid var(--border-color);
+}
+
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.5rem 2rem;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.section-title {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.section-icon {
+  font-size: 1.5rem;
+  color: var(--accent-color);
+}
+
+h2 {
+  font-size: 1.25rem;
+  font-weight: 600;
+}
+
+.request-button {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background-color: var(--button-bg);
+  color: var(--button-text);
+  border: none;
+  padding: 0.75rem 1.25rem;
+  border-radius: 0.5rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  box-shadow: 0 2px 5px rgba(79, 70, 229, 0.3);
+}
+
+.request-button:hover {
+  background-color: var(--button-hover);
+  transform: translateY(-1px);
+}
+
+.btn-icon {
+  font-size: 1rem;
+}
+
+.table-container {
+  padding: 1.5rem 2rem;
+}
+
+h3 {
+  font-size: 1.125rem;
+  margin-bottom: 1.25rem;
+  color: var(--text-primary);
+  font-weight: 600;
+}

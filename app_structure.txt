@@ -1,0 +1,27 @@
+src/
+├── components/
+│   ├── Header.js
+│   ├── ThemeToggle.js
+│   ├── EmployeeDashboard.js
+│   ├── TimeOffForm.js
+│   ├── EmployeeRequestsTable.js
+│   ├── ManagerDashboard.js
+│   ├── ManagerRequestsTable.js
+│   └── Footer.js
+├── styles/
+│   ├── variables.css
+│   ├── base.css
+│   ├── header.css
+│   ├── card.css
+│   ├── table.css
+│   ├── empty-state.css
+│   ├── modal.css
+│   ├── manager-actions.css
+│   ├── footer.css
+│   ├── responsive.css
+│   ├── datepicker.css
+│   ├── animations.css
+│   ├── accessibility.css
+│   └── App.css
+├── App.js
+└── index.js
