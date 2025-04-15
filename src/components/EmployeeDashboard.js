@@ -1,4 +1,3 @@
-// src/components/EmployeeDashboard.js
 import React, { useState } from "react";
 import { FiUser, FiCalendar } from "react-icons/fi";
 import TimeOffForm from "./TimeOffForm";
@@ -13,6 +12,13 @@ const EmployeeDashboard = ({ requests, handleSubmit }) => {
         <div className="section-title">
           <FiUser className="section-icon" />
           <h2>Employee Dashboard</h2>
+        </div>
+      </div>
+
+      <div className="user-info-row">
+        <div className="user-details">
+          <span className="info-label">Name:</span> John Smith
+          <span className="info-label id-label">Employee ID:</span> 0154CA
         </div>
         <button className="request-button" onClick={() => setShowForm(true)}>
           <FiCalendar className="btn-icon" />

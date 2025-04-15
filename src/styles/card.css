@@ -70,3 +70,17 @@ h3 {
   color: var(--text-primary);
   font-weight: 600;
 }
+
+.employee-id,
+.manager-id {
+  font-size: 1.2rem;
+  margin: 0.5rem 0 1rem 0;
+  font-weight: bold;
+  padding-left: 1rem;
+}
+
+.action-buttons {
+  margin: 0.5rem 0 1rem 0;
+  display: flex;
+  justify-content: flex-end;
+}

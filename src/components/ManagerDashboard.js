@@ -18,6 +18,13 @@ const ManagerDashboard = ({
         </div>
       </div>
 
+      <div className="user-info-row">
+        <div className="user-details">
+          <span className="info-label">Name:</span> Hazel Wood
+          <span className="info-label id-label">Manager ID:</span> 243ABZ
+        </div>
+      </div>
+
       <ManagerRequestsTable
         requests={requests}
         managerActions={managerActions}
