@@ -1,58 +1,82 @@
 // src/components/EmployeeRequestsTable.js
 import React from "react";
-import { FiCalendar } from "react-icons/fi";
+import "../styles/table.css";
+import "../styles/empty-state.css";
 
 const EmployeeRequestsTable = ({ requests }) => {
-  const calculateDays = (start, end) => {
-    const differenceInTime = end.getTime() - start.getTime();
-    return Math.floor(differenceInTime / (1000 * 3600 * 24)) + 1;
+  // Format date to display in a readable format
+  const formatDate = (dateString) => {
+    const date = new Date(dateString);
+    return date.toLocaleDateString("en-US", {
+      year: "numeric",
+      month: "short",
+      day: "numeric",
+    });
   };
+
+  // Get status class for styling
+  const getStatusClass = (status) => {
+    switch (status) {
+      case "approved":
+        return "status-approved";
+      case "rejected":
+        return "status-rejected";
+      case "pending":
+      default:
+        return "status-pending";
+    }
+  };
+
+  if (!requests || requests.length === 0) {
+    return (
+      <div className="empty-state">
+        <div className="empty-state-icon">📅</div>
+        <h3>No Time-Off Requests</h3>
+        <p>You haven't submitted any time-off requests yet.</p>
+      </div>
+    );
+  }
 
   return (
     <div className="table-container">
-      <h3>My Time-Off Requests</h3>
-      {requests.length > 0 ? (
-        <div className="table-responsive">
-          <table className="requests-table">
-            <thead>
-              <tr>
-                <th>Date Requested</th>
-                <th>Start Date</th>
-                <th>End Date</th>
-                <th>Days</th>
-                <th>Reason</th>
-                <th>Status</th>
-                <th>Manager Comments</th>
-              </tr>
-            </thead>
-            <tbody>
-              {requests.map((request) => (
-                <tr key={request.id}>
-                  <td>{request.requestDate.toLocaleDateString()}</td>
-                  <td>{request.startDate.toLocaleDateString()}</td>
-                  <td>{request.endDate.toLocaleDateString()}</td>
-                  <td>{calculateDays(request.startDate, request.endDate)}</td>
-                  <td>{request.reason}</td>
-                  <td>
-                    <span
-                      className={`status-badge ${request.status.toLowerCase()}`}
-                    >
-                      {request.status}
-                    </span>
-                  </td>
-                  <td>{request.comments}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-      ) : (
-        <div className="empty-state">
-          <FiCalendar className="empty-icon" />
-          <p>No time-off requests submitted yet.</p>
-          <p>Click the "Request Time Off" button to get started.</p>
-        </div>
-      )}
+      <table className="data-table">
+        <thead>
+          <tr>
+            <th>Request ID</th>
+            <th>Start Date</th>
+            <th>End Date</th>
+            <th>Reason</th>
+            <th>Status</th>
+            <th>Response</th>
+          </tr>
+        </thead>
+        <tbody>
+          {requests.map((request) => (
+            <tr key={request.id}>
+              <td>{request.id}</td>
+              <td>{formatDate(request.startDate)}</td>
+              <td>{formatDate(request.endDate)}</td>
+              <td className="reason-cell">{request.reason}</td>
+              <td>
+                <span
+                  className={`status-badge ${getStatusClass(request.status)}`}
+                >
+                  {request.status}
+                </span>
+              </td>
+              <td>
+                {request.responseReason ? (
+                  request.responseReason
+                ) : request.status === "pending" ? (
+                  <span className="awaiting">Awaiting response</span>
+                ) : (
+                  <span className="no-reason">No reason provided</span>
+                )}
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
     </div>
   );
 };

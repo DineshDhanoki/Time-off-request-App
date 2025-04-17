@@ -1,6 +1,5 @@
 // src/components/TimeOffForm.js
 import React, { useState } from "react";
-import { submitTimeOffRequest } from "../services/timeOffService";
 import "../styles/modal.css";
 
 const TimeOffForm = ({ employee, onRequestSubmitted }) => {
@@ -29,19 +28,26 @@ const TimeOffForm = ({ employee, onRequestSubmitted }) => {
         startDate,
         endDate,
         reason,
+        status: "pending",
+        requestedAt: new Date(),
       };
 
-      const result = await submitTimeOffRequest(requestData);
-      setIsSubmitting(false);
+      // In a real implementation, this would call your API service
+      // For now, we'll simulate the API call
+      setTimeout(() => {
+        console.log("Submitting request:", requestData);
+        setIsSubmitting(false);
 
-      // Reset form
-      setStartDate("");
-      setEndDate("");
-      setReason("");
+        // Reset form
+        setStartDate("");
+        setEndDate("");
+        setReason("");
 
-      if (onRequestSubmitted) {
-        onRequestSubmitted(result);
-      }
+        if (onRequestSubmitted) {
+          // Add a fake ID for demonstration
+          onRequestSubmitted({ ...requestData, id: `req-${Date.now()}` });
+        }
+      }, 1000);
     } catch (error) {
       setError(error.message || "Failed to submit request");
       setIsSubmitting(false);
