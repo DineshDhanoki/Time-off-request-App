@@ -1,13 +1,23 @@
 src/
 ├── components/
 │   ├── Header.js
+│   ├── Footer.js
 │   ├── ThemeToggle.js
 │   ├── EmployeeDashboard.js
-│   ├── TimeOffForm.js
 │   ├── EmployeeRequestsTable.js
+│   ├── TimeOffForm.js
 │   ├── ManagerDashboard.js
 │   ├── ManagerRequestsTable.js
-│   └── Footer.js
+│   ├── ManagerRequestReview.js (new)
+│   ├── NotificationCenter.js (new)
+│   └── AvailabilityDisplay.js (new)
+├── services/
+│   ├── timeOffService.js (new)
+│   ├── hrmsService.js (new)
+│   ├── jobService.js (new)
+│   ├── availabilityService.js (new)
+│   ├── webSocketService.js (new)
+│   └── authService.js (new)
 ├── styles/
 │   ├── variables.css
 │   ├── base.css
@@ -22,6 +32,21 @@ src/
 │   ├── datepicker.css
 │   ├── animations.css
 │   ├── accessibility.css
+│   ├── notifications.css (new)
+│   ├── manager-review.css (new)
 │   └── App.css
+├── context/
+│   └── WebSocketContext.js (new)
+├── utils/
+│   ├── dateUtils.js (new)
+│   └── notificationUtils.js (new)
+├── routes/
+│   ├── requests.js (new - server side)
+│   ├── hrms.js (new - server side)
+│   ├── jobs.js (new - server side)
+│   └── availability.js (new - server side)
+├── server.js (new - server side)
+├── db/
+│   └── database.js (new - server side)
 ├── App.js
 └── index.js

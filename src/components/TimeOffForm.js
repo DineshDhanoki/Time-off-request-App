@@ -1,94 +1,106 @@
 // src/components/TimeOffForm.js
 import React, { useState } from "react";
-import DatePicker from "react-datepicker";
-import "react-datepicker/dist/react-datepicker.css";
+import { submitTimeOffRequest } from "../services/timeOffService";
+import "../styles/modal.css";
 
-const TimeOffForm = ({ handleSubmit, setShowForm }) => {
-  const [startDate, setStartDate] = useState(new Date());
-  const [endDate, setEndDate] = useState(new Date());
+const TimeOffForm = ({ employee, onRequestSubmitted }) => {
+  const [startDate, setStartDate] = useState("");
+  const [endDate, setEndDate] = useState("");
   const [reason, setReason] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [error, setError] = useState("");
 
-  const calculateDays = (start, end) => {
-    const differenceInTime = end.getTime() - start.getTime();
-    return Math.floor(differenceInTime / (1000 * 3600 * 24)) + 1;
-  };
-
-  const onSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    const newRequest = {
-      id: Date.now(),
-      employeeName: "John Smith", // Hardcoding for now
-      startDate: startDate,
-      endDate: endDate,
-      reason: reason,
-      status: "Requested",
-      comments: "",
-      requestDate: new Date(),
-    };
-    handleSubmit(newRequest);
-    setReason("");
-    setStartDate(new Date());
-    setEndDate(new Date());
-    setShowForm(false);
+    setIsSubmitting(true);
+    setError("");
+
+    try {
+      // Validate dates
+      if (new Date(startDate) > new Date(endDate)) {
+        throw new Error("End date must be after start date");
+      }
+
+      const requestData = {
+        employeeId: employee.id,
+        employeeName: employee.name,
+        role: employee.role,
+        managerId: employee.managerId,
+        startDate,
+        endDate,
+        reason,
+      };
+
+      const result = await submitTimeOffRequest(requestData);
+      setIsSubmitting(false);
+
+      // Reset form
+      setStartDate("");
+      setEndDate("");
+      setReason("");
+
+      if (onRequestSubmitted) {
+        onRequestSubmitted(result);
+      }
+    } catch (error) {
+      setError(error.message || "Failed to submit request");
+      setIsSubmitting(false);
+    }
   };
 
   return (
-    <div className="modal-overlay">
-      <div className="modal-content">
-        <h3>New Time-Off Request</h3>
-        <form onSubmit={onSubmit}>
-          <div className="form-group">
-            <label>Start Date:</label>
-            <DatePicker
-              selected={startDate}
-              onChange={(date) => setStartDate(date)}
-              className="date-picker"
-              dateFormat="MMMM d, yyyy"
-            />
-          </div>
+    <div className="time-off-form-container">
+      <h2>Request Time Off</h2>
 
-          <div className="form-group">
-            <label>End Date:</label>
-            <DatePicker
-              selected={endDate}
-              onChange={(date) => setEndDate(date)}
-              className="date-picker"
-              minDate={startDate}
-              dateFormat="MMMM d, yyyy"
-            />
-          </div>
+      {error && <div className="error-message">{error}</div>}
 
-          <div className="form-group">
-            <label>Reason:</label>
-            <textarea
-              value={reason}
-              onChange={(e) => setReason(e.target.value)}
-              required
-              placeholder="Please describe the reason for your time off request..."
-            />
-          </div>
+      <form onSubmit={handleSubmit}>
+        <div className="form-group">
+          <label htmlFor="startDate">Start Date</label>
+          <input
+            type="date"
+            id="startDate"
+            value={startDate}
+            onChange={(e) => setStartDate(e.target.value)}
+            min={new Date().toISOString().split("T")[0]} // Prevent past dates
+            required
+          />
+        </div>
 
-          <div className="time-summary">
-            <span>
-              Total days requested:{" "}
-              <strong>{calculateDays(startDate, endDate)}</strong>
-            </span>
-          </div>
+        <div className="form-group">
+          <label htmlFor="endDate">End Date</label>
+          <input
+            type="date"
+            id="endDate"
+            value={endDate}
+            onChange={(e) => setEndDate(e.target.value)}
+            min={startDate || new Date().toISOString().split("T")[0]}
+            required
+          />
+        </div>
 
-          <div className="form-actions">
-            <button type="submit" className="btn-primary">
-              Submit Request
-            </button>
-            <button
-              type="button"
-              className="btn-secondary"
-              onClick={() => setShowForm(false)}
-            >
-              Cancel
-            </button>
-          </div>
-        </form>
-      </div>
+        <div className="form-group">
+          <label htmlFor="reason">Reason</label>
+          <textarea
+            id="reason"
+            value={reason}
+            onChange={(e) => setReason(e.target.value)}
+            rows={4}
+            placeholder="Please provide a reason for your time-off request"
+            required
+          />
+        </div>
+
+        <div className="form-actions">
+          <button
+            type="submit"
+            className="submit-button"
+            disabled={isSubmitting}
+          >
+            {isSubmitting ? "Submitting..." : "Submit Request"}
+          </button>
+        </div>
+      </form>
     </div>
   );
 };
